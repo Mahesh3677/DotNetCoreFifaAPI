@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Swashbuckle.AspNetCore;
 using Fifa.Installers;
+using Fifa.Options;
 
 namespace Fifa
 {
@@ -45,6 +46,7 @@ namespace Fifa
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             var swaggerOptions = new SwaggerOptions();
             Configuration.GetSection(nameof(swaggerOptions)).Bind(swaggerOptions);
 

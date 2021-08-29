@@ -27,5 +27,14 @@ namespace Fifa.Contracts
 
             public const string Delete = Base + "/posts/{postId}";
         }
+
+        public static class Identity
+        {
+            public const string Login = Base + "/Identity/login";
+
+            public const string Register = Base + "/Identity/register";
+
+          
+        }
     }
 }
