@@ -17,5 +17,6 @@ namespace Fifa.Services
         Task<bool> EditPostAsync(Post post);
 
         Task<bool> DeletePostAsync(Guid postID);
+        Task<bool>UserOwnsPostAsync(Guid postId, string v);
     }
 }

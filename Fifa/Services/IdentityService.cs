@@ -23,6 +23,24 @@ namespace Fifa.Services
             _jwtSettings = jwtSettings;
         }
 
+        public async Task<AuthenticationResult> LoginAsync(string email, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return new AuthenticationResult { Errors = new[] { "Email does not exists" } };
+            }
+
+           
+            var validPassword = await _userManager.CheckPasswordAsync(user, password);
+            if (!validPassword)
+            {
+                return new AuthenticationResult { Errors = new[] {"email/passwprd wrong" } };
+            }
+            return GenerateAuthenticationResultforUser(user);
+        }
+
         public async Task<AuthenticationResult> RegisterAsync(string email, string password)
         {
             var existingUSer = await _userManager.FindByEmailAsync(email);
@@ -43,6 +61,11 @@ namespace Fifa.Services
             {
                 return new AuthenticationResult { Errors = createdUSer.Errors.Select(x => x.Description) };
             }
+            return GenerateAuthenticationResultforUser(newUSer);
+        }
+
+        private AuthenticationResult GenerateAuthenticationResultforUser(IdentityUser newUSer)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -54,17 +77,17 @@ namespace Fifa.Services
                           new Claim(JwtRegisteredClaimNames.Email, newUSer.Email),
                           new Claim("id",newUSer.Id)
                 }),
-                Expires =DateTime.Now.AddHours(2),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),SecurityAlgorithms.HmacSha256Signature)
+                Expires = DateTime.Now.AddHours(2),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return new AuthenticationResult 
-            { 
-               Token =tokenHandler.WriteToken(token),
-               Success = true
+            return new AuthenticationResult
+            {
+                Token = tokenHandler.WriteToken(token),
+                Success = true
             };
         }
     }

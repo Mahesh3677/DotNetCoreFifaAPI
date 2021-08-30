@@ -54,8 +54,18 @@ namespace Fifa.Services
             return updated > 0;
         }
 
-      
-
-
+        public async Task<bool> UserOwnsPostAsync(Guid postId, string userId)
+        {
+            var post = await _dataContext.Posts.AsNoTracking().SingleOrDefaultAsync(x => x.Id == postId);
+            if(post==null)
+            {
+                return false;
+            }
+            if(post.UserID !=userId)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

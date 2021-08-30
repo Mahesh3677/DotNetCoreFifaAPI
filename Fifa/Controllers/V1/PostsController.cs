@@ -2,6 +2,7 @@
 using Fifa.Contracts.Requests;
 using Fifa.Contracts.Responses;
 using Fifa.Domain;
+using Fifa.Extensions;
 using Fifa.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -53,7 +54,8 @@ namespace Fifa.Controllers.V1
         {
             var post = new Post
             {
-                Name = postRequest.Name
+                Name = postRequest.Name,
+                UserID = HttpContext.GetUserID()
             };
 
             await _postService.CreatePostAsync(post);
@@ -73,6 +75,11 @@ namespace Fifa.Controllers.V1
         [HttpPut(ApiRoutes.Posts.Update)]
         public async Task<IActionResult> UpdatePostAsync([FromRoute] Guid postId, [FromBody] UpdatePostRequest request)
         {
+            var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserID());
+            if(!userOwnsPost)
+            {
+                return BadRequest(new { error = "you donot own this post" });
+            }
             var post = new Post
             {
                 Id = postId,
@@ -88,6 +95,11 @@ namespace Fifa.Controllers.V1
         [HttpDelete(ApiRoutes.Posts.Delete)]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid postId)
         {
+            var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserID());
+            if (!userOwnsPost)
+            {
+                return BadRequest(new { error = "you donot own this post" });
+            }
             if (await _postService.DeletePostAsync(postId))
                 return Ok(_postService.GetPostsAsync());
             else
