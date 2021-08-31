@@ -13,8 +13,9 @@ using System.Threading.Tasks;
 using Xunit;
 namespace Fifa.IntegrationTests
 {
-    public class IntegrationTest
+    public class IntegrationTest : IDisposable
     {
+        private readonly IServiceProvider _serviceProvider;
         protected readonly HttpClient client;
 
         public IntegrationTest()
@@ -32,6 +33,7 @@ namespace Fifa.IntegrationTests
                         });
                     });
                 });
+            _serviceProvider = appFactory.Services;
             client = appFactory.CreateClient();
         }
 
@@ -56,6 +58,13 @@ namespace Fifa.IntegrationTests
         {
             var response = await client.PostAsJsonAsync(ApiRoutes.Posts.Create, request);
             return await response.Content.ReadAsAsync<PostReponse>();
+        }
+
+        public void Dispose()
+        {
+            using var serviceScope = _serviceProvider.CreateScope();
+            var context = serviceScope.ServiceProvider.GetService<DataContext>();
+            context.Database.EnsureDeleted();
         }
     }
 }

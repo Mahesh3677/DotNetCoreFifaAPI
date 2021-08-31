@@ -12,6 +12,7 @@ namespace Fifa.Domain
     public class Post
     {
         [Key]
+       
         public Guid Id { get; set; }
 
         [Required]        
