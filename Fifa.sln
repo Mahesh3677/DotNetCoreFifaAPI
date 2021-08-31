@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fifa", "Fifa\Fifa.csproj", "{33059092-4EE8-45F3-A78A-8E17D0D18339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fifa", "Fifa\Fifa.csproj", "{33059092-4EE8-45F3-A78A-8E17D0D18339}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fifa.IntegrationTests", "Fifa.IntegrationTests\Fifa.IntegrationTests.csproj", "{D33DEEAD-2E0B-44A5-B822-10846B7264CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{33059092-4EE8-45F3-A78A-8E17D0D18339}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33059092-4EE8-45F3-A78A-8E17D0D18339}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33059092-4EE8-45F3-A78A-8E17D0D18339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D33DEEAD-2E0B-44A5-B822-10846B7264CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D33DEEAD-2E0B-44A5-B822-10846B7264CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D33DEEAD-2E0B-44A5-B822-10846B7264CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D33DEEAD-2E0B-44A5-B822-10846B7264CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
