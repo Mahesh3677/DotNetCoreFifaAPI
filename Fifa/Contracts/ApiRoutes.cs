@@ -34,7 +34,7 @@ namespace Fifa.Contracts
 
             public const string Register = Base + "/Identity/register";
 
-          
+            public const string Refresh = Base + "/Identity/refresh";
         }
     }
 }
