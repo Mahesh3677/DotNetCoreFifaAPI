@@ -1,6 +1,8 @@
-﻿using Fifa.Options;
+﻿using Fifa.Authorization;
+using Fifa.Options;
 using Fifa.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -54,8 +56,13 @@ namespace Fifa.Installers
              options =>
             {
                 options.AddPolicy("PostDeleter", builder => builder.RequireClaim("post.delete", "true"));
+                options.AddPolicy("MustWorkFor", policy =>
+                 {
+                     policy.AddRequirements(new WorksForCompanyRequirement("kshb.com"));
+                 });
             }
             );
+            services.AddSingleton<IAuthorizationHandler, WorksForCompanyHandler>();
 
             services.AddSwaggerGen(x =>
             {

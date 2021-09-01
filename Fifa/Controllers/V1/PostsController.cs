@@ -27,7 +27,8 @@ namespace Fifa.Controllers.V1
         }
 
         [HttpGet(ApiRoutes.Posts.Getall)]
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
+        [Authorize(Policy = "MustWorkFor")]
         public async Task<IActionResult> GetAllAsync()
         {
             return Ok(await _postService.GetPostsAsync());
