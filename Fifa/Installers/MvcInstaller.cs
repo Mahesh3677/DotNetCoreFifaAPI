@@ -1,6 +1,8 @@
 ﻿using Fifa.Authorization;
+using Fifa.Filters;
 using Fifa.Options;
 using Fifa.Services;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +27,13 @@ namespace Fifa.Installers
             services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddMvc(
-                Options => { Options.EnableEndpointRouting = false; }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                Options => 
+                { 
+                    Options.EnableEndpointRouting = false;
+                    Options.Filters.Add<ValidationFilter>();
+                })
+                .AddFluentValidation(mvcConfiguration=> mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             var tokenValidationParameters = new TokenValidationParameters
             {
