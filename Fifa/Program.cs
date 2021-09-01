@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore;
+﻿using Fifa.Data;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,9 +15,31 @@ namespace Fifa
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+          var host =  CreateWebHostBuilder(args).Build();
+
+            using (var servicescope = host.Services.CreateScope())
+            {
+                //var dbcontext = servicescope.ServiceProvider.GetRequiredService<DataContext>();
+
+                //await dbcontext.Database.migr
+
+                var rolemanager = servicescope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                if(!await rolemanager.RoleExistsAsync("Admin"))
+                {
+                    var adminrole = new IdentityRole("Admin");
+                    await rolemanager.CreateAsync(adminrole);
+                }
+
+                if (!await rolemanager.RoleExistsAsync("Poster"))
+                {
+                    var adminrole = new IdentityRole("Poster");
+                    await rolemanager.CreateAsync(adminrole);
+                }
+            }
+
+                await host.RunAsync();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

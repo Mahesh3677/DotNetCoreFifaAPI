@@ -33,7 +33,10 @@ namespace Fifa.Services
 
         public async Task<AuthenticationResult> LoginAsync(string email, string password)
         {
+         
             var user = await _userManager.FindByEmailAsync(email);
+
+         
 
             if (user == null)
             {
@@ -83,14 +86,23 @@ namespace Fifa.Services
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
+            var roles = await _userManager.GetRolesAsync(newUSer);
+           
             var claims = new List<Claim> {
                     new Claim(JwtRegisteredClaimNames.Sub, newUSer.Email),
                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                           new Claim(JwtRegisteredClaimNames.Email, newUSer.Email),
                           new Claim("id",newUSer.Id)
+
                 };
 
+            foreach(var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
             var userClaims = await _userManager.GetClaimsAsync(newUSer);
+           
             claims.AddRange(userClaims);
 
             var tokenDescriptor = new SecurityTokenDescriptor

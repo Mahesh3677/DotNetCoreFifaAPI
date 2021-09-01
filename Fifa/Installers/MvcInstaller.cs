@@ -48,15 +48,19 @@ namespace Fifa.Installers
                 x.TokenValidationParameters = tokenValidationParameters;
             });
 
-            services.AddAuthorization(options => 
+
+            services.AddAuthorization(
+             //  add authorization with claims
+             options =>
             {
                 options.AddPolicy("PostDeleter", builder => builder.RequireClaim("post.delete", "true"));
-            });
+            }
+            );
 
             services.AddSwaggerGen(x =>
             {
 
-                x.SwaggerDoc("v1", new OpenApiInfo{ Title = "Fifa APi", Version = "v1" });
+                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Fifa APi", Version = "v1" });
                 var security = new Dictionary<string, IEnumerable<string>>
                 {
                     {"Bearer" , new string[0] }
