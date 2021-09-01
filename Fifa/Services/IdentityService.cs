@@ -58,13 +58,20 @@ namespace Fifa.Services
                 return new AuthenticationResult { Errors = new[] { "Email already exists" } };
             }
 
+            
+
             var newUSer = new IdentityUser
             {
+              
                 Email = email,
                 UserName = email
             };
 
+           
+
             var createdUSer = await _userManager.CreateAsync(newUSer, password);
+
+            await _userManager.AddClaimAsync(newUSer, new Claim("post.delete", "true"));
             if (!createdUSer.Succeeded)
             {
                 return new AuthenticationResult { Errors = createdUSer.Errors.Select(x => x.Description) };
@@ -76,15 +83,19 @@ namespace Fifa.Services
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
+            var claims = new List<Claim> {
                     new Claim(JwtRegisteredClaimNames.Sub, newUSer.Email),
                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                           new Claim(JwtRegisteredClaimNames.Email, newUSer.Email),
                           new Claim("id",newUSer.Id)
-                }),
+                };
+
+            var userClaims = await _userManager.GetClaimsAsync(newUSer);
+            claims.AddRange(userClaims);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.Add(_jwtSettings.TokenLifetime),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

@@ -48,6 +48,11 @@ namespace Fifa.Installers
                 x.TokenValidationParameters = tokenValidationParameters;
             });
 
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("PostDeleter", builder => builder.RequireClaim("post.delete", "true"));
+            });
+
             services.AddSwaggerGen(x =>
             {
 

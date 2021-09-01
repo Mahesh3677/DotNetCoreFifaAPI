@@ -93,6 +93,7 @@ namespace Fifa.Controllers.V1
 
 
         [HttpDelete(ApiRoutes.Posts.Delete)]
+        [Authorize(Policy = "PostDeleter")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid postId)
         {
             var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserID());
