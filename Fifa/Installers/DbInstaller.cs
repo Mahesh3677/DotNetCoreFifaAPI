@@ -19,6 +19,7 @@ namespace Fifa.Installers
                 .AddEntityFrameworkStores<DataContext>();
 
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<ICountryService, CountryService>();
         }
     }
 }

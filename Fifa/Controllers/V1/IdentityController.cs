@@ -41,7 +41,8 @@ namespace Fifa.Controllers.V1
             return Ok(new AuthSuccessResponse
             {
                 Token = authResponse.Token,
-                RefreshToken = authResponse.RefreshToken
+                RefreshToken = authResponse.RefreshToken,
+                Email = authResponse.Email
             });
         }
 
@@ -59,7 +60,8 @@ namespace Fifa.Controllers.V1
             return Ok(new AuthSuccessResponse
             {
                 Token = authResponse.Token,
-                RefreshToken = authResponse.RefreshToken
+                RefreshToken = authResponse.RefreshToken,
+                Email = authResponse.Email
             });
         }
 

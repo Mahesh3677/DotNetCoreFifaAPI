@@ -4,14 +4,16 @@ using Fifa.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fifa.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210902170034_countryandclub")]
+    partial class countryandclub
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,30 +58,6 @@ namespace Fifa.Data.Migrations
                     b.HasKey("CountryId");
 
                     b.ToTable("Country");
-                });
-
-            modelBuilder.Entity("Fifa.Domain.CountryClubRankRelation", b =>
-                {
-                    b.Property<Guid>("RankId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ClubID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CountryID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Rank")
-                        .HasColumnType("int");
-
-                    b.HasKey("RankId");
-
-                    b.HasIndex("ClubID");
-
-                    b.HasIndex("CountryID");
-
-                    b.ToTable("CountryClubRankRelation");
                 });
 
             modelBuilder.Entity("Fifa.Domain.Post", b =>
@@ -340,17 +318,6 @@ namespace Fifa.Data.Migrations
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Fifa.Domain.CountryClubRankRelation", b =>
-                {
-                    b.HasOne("Fifa.Domain.Club", "Club")
-                        .WithMany()
-                        .HasForeignKey("ClubID");
-
-                    b.HasOne("Fifa.Domain.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryID");
                 });
 
             modelBuilder.Entity("Fifa.Domain.Post", b =>

@@ -6,8 +6,18 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20210909111136_rank.cs" />
+    <Compile Remove="Data\Migrations\20210909111136_rank.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210909111316_rank.cs" />
+    <Compile Remove="Data\Migrations\20210909111316_rank.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
+
+    
+ 
 
     
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.5.0" />
@@ -25,7 +35,18 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
 
     
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Services\ServiceHelper\" />
   </ItemGroup>
 
 </Project>

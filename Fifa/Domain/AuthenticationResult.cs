@@ -13,5 +13,7 @@ namespace Fifa.Domain
 
         public IEnumerable<string> Errors { get; set; }
         public string RefreshToken { get; internal set; }
+
+        public string Email { get; set; }
     }
 }

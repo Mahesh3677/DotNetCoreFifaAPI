@@ -73,8 +73,7 @@ namespace Fifa.Services
            
 
             var createdUSer = await _userManager.CreateAsync(newUSer, password);
-
-            await _userManager.AddClaimAsync(newUSer, new Claim("post.delete", "true"));
+            
             if (!createdUSer.Succeeded)
             {
                 return new AuthenticationResult { Errors = createdUSer.Errors.Select(x => x.Description) };
@@ -120,7 +119,7 @@ namespace Fifa.Services
                 JwtId = token.Id,
                 UserID = newUSer.Id,
                 CreationDate =DateTime.UtcNow,
-                ExpiryDate = DateTime.UtcNow.AddMonths(6)
+                ExpiryDate = DateTime.UtcNow.AddMinutes(30)
             };
 
             await _context.RefreshTokens.AddAsync(refreshToken);
@@ -133,7 +132,8 @@ namespace Fifa.Services
             {
                 Token = tokenHandler.WriteToken(token),
                 Success = true,
-                RefreshToken = refreshToken.Token
+                RefreshToken = refreshToken.Token,
+                Email = newUSer.Email
             };
         }
 
@@ -174,7 +174,7 @@ namespace Fifa.Services
 
             if(validatedToken == null)
             {
-                return new AuthenticationResult { Errors = new[] { "invalid token" } };
+                return new AuthenticationResult { Errors = new[] { "invalid_token" } };
             }
             var expiryDateUnix = long.Parse(validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
 
@@ -183,7 +183,7 @@ namespace Fifa.Services
 
             if(expiryDateTimeUTC > DateTime.UtcNow)
             {
-                return new AuthenticationResult { Errors = new[] { "token did not expire" } };
+                return new AuthenticationResult { Errors = new[] { "refresh_token_Not_expired" } };
             }
 
             var jti = validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
@@ -196,7 +196,7 @@ namespace Fifa.Services
 
             if (storedRefreshToken.ExpiryDate < DateTime.UtcNow)
             {
-                return new AuthenticationResult { Errors = new[] { "this  refresh token expired" } };
+                return new AuthenticationResult { Errors = new[] { "refresh_token_expired" } };
             }
             if (storedRefreshToken.Invalidated)
             {

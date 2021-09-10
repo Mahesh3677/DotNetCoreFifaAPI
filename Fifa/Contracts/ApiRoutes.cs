@@ -36,5 +36,18 @@ namespace Fifa.Contracts
 
             public const string Refresh = Base + "/Identity/refresh";
         }
+
+        public static class Countries
+        {
+            public const string Getall = Base + "/countries";
+
+            public const string Create = Base + "/countries";
+
+            public const string Update = Base + "/countries/{countryId}";
+
+            public const string Get = Base + "/countries/{countryId}";
+
+            public const string Delete = Base + "/countries/{countryId}";
+        }
     }
 }
