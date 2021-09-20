@@ -43,11 +43,11 @@ namespace Fifa.Contracts
 
             public const string Create = Base + "/countries";
 
-            public const string Update = Base + "/countries/{countryId}";
+            public const string Update = Base + "/countries";
 
-            public const string Get = Base + "/countries/{countryId}";
+            public const string Get = Base + "/country";
 
-            public const string Delete = Base + "/countries/{countryId}";
+            public const string Delete = Base + "/country";
         }
     }
 }

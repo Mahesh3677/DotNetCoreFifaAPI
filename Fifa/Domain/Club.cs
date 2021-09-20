@@ -18,8 +18,5 @@ namespace Fifa.Domain
         [ForeignKey(nameof(CountryId))]
         public virtual Country Country { get; set; }
 
-       
-        public int Rank { get; set; }
-
     }
 }

@@ -21,20 +21,20 @@ namespace Fifa.Data
 
         public DbSet<Country> Country { get; set; }
 
-        [NotMapped]
+        
         public DbSet<ResponseCountry>  ResponseCountry { get; set; }
 
         public DbSet<Club> Club { get; set; }
 
         public DbSet<CountryClubRankRelation> CountryClubRankRelation { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-        //    base.OnModelCreating(builder);
-        //    builder.Entity<Country>()
-        //         .Ignore(c => c.Rank);
-        //    builder.Entity<Club>()
-        //       .Ignore(c => c.Rank);
-        //}
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+          
+            builder.Entity<ResponseCountry>().HasNoKey().ToView(null);
+        }
+
+
     }
 }

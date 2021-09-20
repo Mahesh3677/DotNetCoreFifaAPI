@@ -11,6 +11,12 @@
     <Compile Remove="Data\Migrations\20210909111136_rank.Designer.cs" />
     <Compile Remove="Data\Migrations\20210909111316_rank.cs" />
     <Compile Remove="Data\Migrations\20210909111316_rank.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210911082402_test.cs" />
+    <Compile Remove="Data\Migrations\20210911082402_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210911093532_test.cs" />
+    <Compile Remove="Data\Migrations\20210911093532_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210911094517_test.cs" />
+    <Compile Remove="Data\Migrations\20210911094517_test.Designer.cs" />
   </ItemGroup>
 
 

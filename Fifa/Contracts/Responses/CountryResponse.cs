@@ -1,19 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Fifa.Contracts.Requests
+namespace Fifa.Contracts.Responses
 {
-    public class CountryRequest
+    public class CountryResponse
     {
-
-        public string CountryId { get; set; }
+        public Guid CountryId { get; set; }
         public string Name { get; set; }
         public IFormFile FlagImage { get; set; }
 
+        public string FlagImageUrl { get; set; }
         public int Rank { get; set; }
-
     }
 }

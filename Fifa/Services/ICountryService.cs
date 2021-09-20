@@ -10,7 +10,7 @@ namespace Fifa.Services
     {
         Task<List<ResponseCountry>> GetCountriesAsync();
 
-        Task<Country> GetCountryAsync(Guid countryId);
+        Task<List<ResponseCountry>> GetCountryAsync(Guid countryId);
 
         Task<bool> CreateCountryAsync(Country country);
 
